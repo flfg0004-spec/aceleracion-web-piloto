@@ -19,30 +19,72 @@
       "id": "build-benchmark",
       "command": ["{{python}}", "-B", "check_p02.py", "--build"],
       "cwd": "support",
-      "env": {"PYTHONDONTWRITEBYTECODE": "1", "PYTHONPATH": "."},
+      "env": { "PYTHONDONTWRITEBYTECODE": "1", "PYTHONPATH": "." },
       "timeout_seconds": 60
     },
     {
       "id": "observability",
       "command": ["{{python}}", "-B", "check_p02.py", "--obs"],
       "cwd": "support",
-      "env": {"PYTHONDONTWRITEBYTECODE": "1", "PYTHONPATH": "."},
+      "env": { "PYTHONDONTWRITEBYTECODE": "1", "PYTHONPATH": "." },
       "timeout_seconds": 60
     },
     {
       "id": "preview",
       "command": ["{{python}}", "-B", "check_p02.py", "--preview"],
       "cwd": "support",
-      "env": {"PYTHONDONTWRITEBYTECODE": "1", "PYTHONPATH": "."},
+      "env": { "PYTHONDONTWRITEBYTECODE": "1", "PYTHONPATH": "." },
       "timeout_seconds": 60
     }
   ],
   "gates": [
-    {"id": "build-exit", "case": "build-benchmark", "field": "exit_code", "operator": "eq", "expected": 0, "severity": "critical"},
-    {"id": "build-marker", "case": "build-benchmark", "field": "stdout", "operator": "contains", "expected": "PASS build", "severity": "critical"},
-    {"id": "obs-exit", "case": "observability", "field": "exit_code", "operator": "eq", "expected": 0, "severity": "critical"},
-    {"id": "obs-marker", "case": "observability", "field": "stdout", "operator": "contains", "expected": "PASS obs", "severity": "critical"},
-    {"id": "preview-exit", "case": "preview", "field": "exit_code", "operator": "eq", "expected": 0, "severity": "critical"},
-    {"id": "preview-marker", "case": "preview", "field": "stdout", "operator": "contains", "expected": "PASS preview", "severity": "critical"}
+    {
+      "id": "build-exit",
+      "case": "build-benchmark",
+      "field": "exit_code",
+      "operator": "eq",
+      "expected": 0,
+      "severity": "critical"
+    },
+    {
+      "id": "build-marker",
+      "case": "build-benchmark",
+      "field": "stdout",
+      "operator": "contains",
+      "expected": "PASS build",
+      "severity": "critical"
+    },
+    {
+      "id": "obs-exit",
+      "case": "observability",
+      "field": "exit_code",
+      "operator": "eq",
+      "expected": 0,
+      "severity": "critical"
+    },
+    {
+      "id": "obs-marker",
+      "case": "observability",
+      "field": "stdout",
+      "operator": "contains",
+      "expected": "PASS obs",
+      "severity": "critical"
+    },
+    {
+      "id": "preview-exit",
+      "case": "preview",
+      "field": "exit_code",
+      "operator": "eq",
+      "expected": 0,
+      "severity": "critical"
+    },
+    {
+      "id": "preview-marker",
+      "case": "preview",
+      "field": "stdout",
+      "operator": "contains",
+      "expected": "PASS preview",
+      "severity": "critical"
+    }
   ]
 }

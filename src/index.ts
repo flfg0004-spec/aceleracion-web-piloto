@@ -3,5 +3,5 @@ export function saludo(nombre: string): string {
 }
 
 if (import.meta.main) {
-  console.log(saludo("piloto"));
+  console.log(saludo('piloto'));
 }

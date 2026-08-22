@@ -18,30 +18,72 @@
       "id": "stack-baseline",
       "command": ["{{python}}", "-B", "check_p01.py", "--stack"],
       "cwd": "support",
-      "env": {"PYTHONDONTWRITEBYTECODE": "1", "PYTHONPATH": "."},
+      "env": { "PYTHONDONTWRITEBYTECODE": "1", "PYTHONPATH": "." },
       "timeout_seconds": 60
     },
     {
       "id": "ci-cd-present",
       "command": ["{{python}}", "-B", "check_p01.py", "--ci"],
       "cwd": "support",
-      "env": {"PYTHONDONTWRITEBYTECODE": "1", "PYTHONPATH": "."},
+      "env": { "PYTHONDONTWRITEBYTECODE": "1", "PYTHONPATH": "." },
       "timeout_seconds": 60
     },
     {
       "id": "e2e-playwright",
       "command": ["{{python}}", "-B", "check_p01.py", "--e2e"],
       "cwd": "support",
-      "env": {"PYTHONDONTWRITEBYTECODE": "1", "PYTHONPATH": "."},
+      "env": { "PYTHONDONTWRITEBYTECODE": "1", "PYTHONPATH": "." },
       "timeout_seconds": 60
     }
   ],
   "gates": [
-    {"id": "stack-exit", "case": "stack-baseline", "field": "exit_code", "operator": "eq", "expected": 0, "severity": "critical"},
-    {"id": "stack-marker", "case": "stack-baseline", "field": "stdout", "operator": "contains", "expected": "PASS stack", "severity": "critical"},
-    {"id": "ci-exit", "case": "ci-cd-present", "field": "exit_code", "operator": "eq", "expected": 0, "severity": "critical"},
-    {"id": "ci-marker", "case": "ci-cd-present", "field": "stdout", "operator": "contains", "expected": "PASS ci", "severity": "critical"},
-    {"id": "e2e-exit", "case": "e2e-playwright", "field": "exit_code", "operator": "eq", "expected": 0, "severity": "critical"},
-    {"id": "e2e-marker", "case": "e2e-playwright", "field": "stdout", "operator": "contains", "expected": "PASS e2e", "severity": "critical"}
+    {
+      "id": "stack-exit",
+      "case": "stack-baseline",
+      "field": "exit_code",
+      "operator": "eq",
+      "expected": 0,
+      "severity": "critical"
+    },
+    {
+      "id": "stack-marker",
+      "case": "stack-baseline",
+      "field": "stdout",
+      "operator": "contains",
+      "expected": "PASS stack",
+      "severity": "critical"
+    },
+    {
+      "id": "ci-exit",
+      "case": "ci-cd-present",
+      "field": "exit_code",
+      "operator": "eq",
+      "expected": 0,
+      "severity": "critical"
+    },
+    {
+      "id": "ci-marker",
+      "case": "ci-cd-present",
+      "field": "stdout",
+      "operator": "contains",
+      "expected": "PASS ci",
+      "severity": "critical"
+    },
+    {
+      "id": "e2e-exit",
+      "case": "e2e-playwright",
+      "field": "exit_code",
+      "operator": "eq",
+      "expected": 0,
+      "severity": "critical"
+    },
+    {
+      "id": "e2e-marker",
+      "case": "e2e-playwright",
+      "field": "stdout",
+      "operator": "contains",
+      "expected": "PASS e2e",
+      "severity": "critical"
+    }
   ]
 }
