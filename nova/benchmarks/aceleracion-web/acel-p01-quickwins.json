@@ -1,0 +1,47 @@
+{
+  "schema": "nova.benchmark/v1",
+  "id": "acel-p01-quickwins",
+  "version": "1.0.0",
+  "title": "ACEL P01 - Stack base, CI/CD y testing E2E verificables",
+  "technology": "web-fullstack-2026",
+  "profile": "nova",
+  "source_nodes": ["sun-74daa0f5:P01"],
+  "source_quality_score": 0.9,
+  "claims": [
+    "El repo piloto declara stack 2026: pnpm, Biome y Bun en scripts de dev/test.",
+    "Existe pipeline CI/CD por PR que ejecuta test+lint+build.",
+    "El flujo de testing E2E usa Playwright MCP/Codegen.",
+    "La configuracion es trazable al informe aceleracion-desarrollo-web-2026."
+  ],
+  "cases": [
+    {
+      "id": "stack-baseline",
+      "command": ["{{python}}", "-B", "check_p01.py", "--stack"],
+      "cwd": "support",
+      "env": {"PYTHONDONTWRITEBYTECODE": "1", "PYTHONPATH": "."},
+      "timeout_seconds": 60
+    },
+    {
+      "id": "ci-cd-present",
+      "command": ["{{python}}", "-B", "check_p01.py", "--ci"],
+      "cwd": "support",
+      "env": {"PYTHONDONTWRITEBYTECODE": "1", "PYTHONPATH": "."},
+      "timeout_seconds": 60
+    },
+    {
+      "id": "e2e-playwright",
+      "command": ["{{python}}", "-B", "check_p01.py", "--e2e"],
+      "cwd": "support",
+      "env": {"PYTHONDONTWRITEBYTECODE": "1", "PYTHONPATH": "."},
+      "timeout_seconds": 60
+    }
+  ],
+  "gates": [
+    {"id": "stack-exit", "case": "stack-baseline", "field": "exit_code", "operator": "eq", "expected": 0, "severity": "critical"},
+    {"id": "stack-marker", "case": "stack-baseline", "field": "stdout", "operator": "contains", "expected": "PASS stack", "severity": "critical"},
+    {"id": "ci-exit", "case": "ci-cd-present", "field": "exit_code", "operator": "eq", "expected": 0, "severity": "critical"},
+    {"id": "ci-marker", "case": "ci-cd-present", "field": "stdout", "operator": "contains", "expected": "PASS ci", "severity": "critical"},
+    {"id": "e2e-exit", "case": "e2e-playwright", "field": "exit_code", "operator": "eq", "expected": 0, "severity": "critical"},
+    {"id": "e2e-marker", "case": "e2e-playwright", "field": "stdout", "operator": "contains", "expected": "PASS e2e", "severity": "critical"}
+  ]
+}
