@@ -1,0 +1,33 @@
+name: Release con observabilidad
+
+on:
+  push:
+    tags: ["v*"]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm }
+      - run: pnpm install --frozen-lockfile=false
+      - run: pnpm build
+
+      # Observability-driven development (informe §5.3):
+      # cada release crea una release Sentry y asocia sourcemaps.
+      - name: Sentry release
+        if: ${{ secrets.SENTRY_AUTH_TOKEN != '' }}
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          SENTRY_PROJECT: aceleracion-web-piloto
+        run: |
+          pnpm exec sentry-cli releases new "$GITHUB_REF_NAME" \
+            --org "$SENTRY_ORG" --project "$SENTRY_PROJECT"
+          pnpm exec sentry-cli releases set-commits "$GITHUB_REF_NAME" --auto
+          pnpm exec sentry-cli releases finalize "$GITHUB_REF_NAME"
+
+      - name: Smoke post-deploy (trazas OTel activas)
+        run: echo "OTEL_EXPORTER_OTLP_ENDPOINT debe apuntar al collector en producción."
