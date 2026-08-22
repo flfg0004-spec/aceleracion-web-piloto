@@ -1,0 +1,20 @@
+{
+  "$schema": "aceleracion-web.build-benchmark/v1",
+  "repo": "aceleracion-web-piloto",
+  "fecha": "2026-08-22",
+  "entorno": { "os": "Windows 11", "runtime": "bun --bun vite", "bundler": "vite@8 + rolldown" },
+  "medicion_local": {
+    "metodo": "Measure-Command sobre 'bun --bun vite build', 2 corridas consecutivas",
+    "cold_ms": 718,
+    "warm_ms": 274,
+    "modulos": "~10 (piloto)"
+  },
+  "referencias_informe_2026": {
+    "vite8_vs_webpack": "10-30x mas rapido (proyectos grandes)",
+    "turbopack_vs_webpack": "Cal.com -19% (152s vs 187s); Makerkit 4.3x",
+    "hmr_hoja_turbopack": "+68%",
+    "fuente": "C:\\dev\\informe-aceleracion-web.md §3"
+  },
+  "decision": "Vite 8 + Rolldown",
+  "rationale": "Repo Vite-native (no Next.js): Rolldown da consistencia dev/prod y builds <300ms warm. Turbopack queda como camino si el proyecto migrase a Next.js."
+}
