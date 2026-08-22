@@ -28,13 +28,15 @@ jobs:
       # Alternativa full-stack GitOps: Northflank; PaaS simple: Railway.
       - name: Deploy preview (Vercel)
         id: deploy
-        if: ${{ secrets.VERCEL_TOKEN != '' }}
+        if: env.VERCEL_TOKEN != ''
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
-          URL=$(pnpm exec vercel deploy --yes --token=${{ secrets.VERCEL_TOKEN }})
+          URL=$(pnpm exec vercel deploy --yes --token="$VERCEL_TOKEN")
           echo "url=$URL" >> "$GITHUB_OUTPUT"
 
       - name: Preview URL (fallback sin token)
-        if: ${{ steps.deploy.outcome == 'skipped' }}
+        if: steps.deploy.outcome == 'skipped' || steps.deploy.outcome == 'failure'
         run: echo "Preview requiere VERCEL_TOKEN — configurar secret del repo."
 
       - name: Comentar URL en el PR

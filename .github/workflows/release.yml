@@ -18,7 +18,7 @@ jobs:
       # Observability-driven development (informe §5.3):
       # cada release crea una release Sentry y asocia sourcemaps.
       - name: Sentry release
-        if: ${{ secrets.SENTRY_AUTH_TOKEN != '' }}
+        if: env.SENTRY_AUTH_TOKEN != ''
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
