@@ -1,0 +1,40 @@
+{
+  "schema": "aceleracion-web.visual-report/v1",
+  "page": "dashboard",
+  "date": "2026-08-22T20:45:49.568Z",
+  "dimensions": {
+    "width": 1536,
+    "height": 1024
+  },
+  "total_pixels": 1572864,
+  "different_pixels": 22582,
+  "match_pct": 98.56,
+  "threshold_match_pct": 95,
+  "converged": true,
+  "top_divergent_regions": [
+    {
+      "region": "2,6",
+      "divergent_pct": 12
+    },
+    {
+      "region": "6,6",
+      "divergent_pct": 11.4
+    },
+    {
+      "region": "0,1",
+      "divergent_pct": 11
+    },
+    {
+      "region": "0,0",
+      "divergent_pct": 10.2
+    },
+    {
+      "region": "6,1",
+      "divergent_pct": 9.4
+    },
+    {
+      "region": "2,1",
+      "divergent_pct": 9
+    }
+  ]
+}

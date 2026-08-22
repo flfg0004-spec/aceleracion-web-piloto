@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',system-ui,sans-serif; }
+  body { width:1536px; height:1024px; background:#0f172a; color:#e2e8f0; }
+  .wrap { padding:32px 40px; display:flex; flex-direction:column; gap:24px; height:100%; }
+  header { display:flex; justify-content:space-between; align-items:center; }
+  h1 { font-size:26px; font-weight:600; color:#f1f5f9; }
+  .brand { color:#3b82f6; font-weight:700; font-size:14px; letter-spacing:2px; }
+  .kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+  .kpi { background:#1e293b; border-radius:12px; padding:22px; border:1px solid #334155; }
+  .kpi .label { font-size:13px; color:#94a3b8; margin-bottom:8px; text-transform:uppercase; letter-spacing:1px; }
+  .kpi .value { font-size:34px; font-weight:700; color:#f8fafc; }
+  .kpi .delta { font-size:13px; margin-top:6px; }
+  .up { color:#4ade80; } .down { color:#f87171; }
+  .chart { background:#1e293b; border-radius:12px; border:1px solid #334155; padding:24px; flex:1; display:flex; flex-direction:column; }
+  .chart h2 { font-size:16px; color:#cbd5e1; margin-bottom:16px; }
+  svg { flex:1; width:100%; }
+  table { width:100%; border-collapse:collapse; background:#1e293b; border-radius:12px; overflow:hidden; }
+  th, td { text-align:left; padding:14px 20px; font-size:15px; border-bottom:1px solid #334155; }
+  th { color:#94a3b8; font-weight:600; font-size:13px; text-transform:uppercase; }
+  tr:last-child td { border-bottom:none; }
+  .badge { padding:4px 12px; border-radius:999px; font-size:12px; font-weight:600; }
+  .passed { background:#14532d; color:#4ade80; }
+  .running { background:#713f12; color:#fde047; }
+  .failed { background:#7f1d1d; color:#fca5a5; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><h1>Dashboard de métricas</h1><span class="brand">ACME DEVOPS</span></header>
+  <div class="kpis">
+    <div class="kpi"><div class="label">Build time</div><div class="value">3m 12s</div><div class="delta up">▼ 18% vs semana previa</div></div>
+    <div class="kpi"><div class="label">Deploy frequency</div><div class="value">14 / sem</div><div class="delta up">▲ 2</div></div>
+    <div class="kpi"><div class="label">Coverage</div><div class="value">87%</div><div class="delta up">▲ 3.2</div></div>
+    <div class="kpi"><div class="label">MTTR</div><div class="value">22 min</div><div class="delta down">▲ 4 min</div></div>
+  </div>
+  <div class="chart">
+    <h2>Builds por día — últimos 30 días</h2>
+    <svg viewBox="0 0 1300 240" preserveAspectRatio="none">
+      <polyline fill="none" stroke="#3b82f6" stroke-width="3"
+        points="0,200 45,190 90,195 135,170 180,175 225,160 270,150 315,158 360,140 405,132 450,120 495,110 540,118 585,95 630,88 675,92 720,75 765,60 810,70 855,55 900,48 945,52 990,38 1035,42 1080,30 1125,25 1170,28 1215,18 1260,15 1300,10"/>
+    </svg>
+  </div>
+  <table>
+    <tr><th>ID</th><th>Título</th><th>Estado</th></tr>
+    <tr><td>#142</td><td>Añadir preview environments por PR</td><td><span class="badge passed">passed</span></td></tr>
+    <tr><td>#141</td><td>Fix otel serviceName condicional</td><td><span class="badge passed">passed</span></td></tr>
+    <tr><td>#140</td><td>Benchmark build Vite 8 + Rolldown</td><td><span class="badge running">running</span></td></tr>
+    <tr><td>#139</td><td>Migrar lint a Biome</td><td><span class="badge failed">failed</span></td></tr>
+    <tr><td>#138</td><td>Spike Hono + Drizzle backend</td><td><span class="badge passed">passed</span></td></tr>
+  </table>
+</div>
+</body>
+</html>

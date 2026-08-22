@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<style>
+  /* Implementación independiente (simula dev/agente construyendo desde el target) */
+  * { margin:0; box-sizing:border-box; font-family:system-ui, sans-serif; }
+  body { width:1536px; height:1024px; background:#0f172a; color:#e2e8f0; padding:32px 40px; display:flex; flex-direction:column; }
+  .grid-table { margin-top:0; }
+  .top { display:flex; align-items:center; justify-content:space-between; margin-bottom:22px; }
+  .title { font-size:25px; color:#f1f5f9; font-weight:600; }
+  .logo { font-size:13px; color:#3b82f6; letter-spacing:2px; font-weight:700; }
+  .cards { display:grid; grid-template-columns:repeat(4, 1fr); gap:20px; margin-bottom:24px; }
+  .card { background:#1e293b; border-radius:12px; border:1px solid #334155; padding:22px; }
+  .name { font-size:13px; text-transform:uppercase; color:#94a3b8; letter-spacing:1px; margin-bottom:8px; }
+  .num { font-size:34px; font-weight:700; margin-top:0; color:#f8fafc; }
+  .trend { font-size:13px; margin-top:6px; }
+  .good { color:#4ade80; } .bad { color:#f87171; }
+  .panel { background:#1e293b; border:1px solid #334155; border-radius:12px; padding:24px; margin-bottom:24px; height:auto; flex:1; min-height:340px; display:flex; flex-direction:column; }
+  .panel-title { color:#cbd5e1; font-size:16px; font-weight:600; margin-bottom:16px; }
+  .grid-table { background:#1e293b; border-radius:12px; overflow:hidden; }
+  table { width:100%; border-collapse:collapse; }
+  th, td { padding:14px 20px; text-align:left; font-size:15px; border-bottom:1px solid #334155; }
+  thead th { color:#94a3b8; font-size:12px; text-transform:uppercase; }
+  tr:last-child td { border-bottom:0; }
+  .pill { font-size:11px; font-weight:600; padding:3px 10px; border-radius:999px; }
+  .ok { background:#14532d; color:#4ade80; }
+  .warn { background:#713f12; color:#fde047; }
+  .err { background:#7f1d1d; color:#fca5a5; }
+</style>
+</head>
+<body>
+  <div class="top">
+    <div class="title">Dashboard de métricas</div>
+    <div class="logo">ACME DEVOPS</div>
+  </div>
+
+  <div class="cards">
+    <div class="card"><div class="name">Build time</div><div class="num">3m 12s</div><div class="trend good">▼ 18% vs semana previa</div></div>
+    <div class="card"><div class="name">Deploy frequency</div><div class="num">14 / sem</div><div class="trend good">▲ 2</div></div>
+    <div class="card"><div class="name">Coverage</div><div class="num">87%</div><div class="trend good">▲ 3.2</div></div>
+    <div class="card"><div class="name">MTTR</div><div class="num">22 min</div><div class="trend bad">▲ 4 min</div></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">Builds por día — últimos 30 días</div>
+    <svg viewBox="0 0 1300 240" preserveAspectRatio="none" style="flex:1;width:100%">
+      <polyline fill="none" stroke="#3b82f6" stroke-width="3"
+        points="0,200 45,190 90,195 135,170 180,175 225,160 270,150 315,158 360,140 405,132 450,120 495,110 540,118 585,95 630,88 675,92 720,75 765,60 810,70 855,55 900,48 945,52 990,38 1035,42 1080,30 1125,25 1170,28 1215,18 1260,15 1300,10"/>
+    </svg>
+  </div>
+
+  <div class="grid-table">
+    <table>
+      <thead><tr><th>ID</th><th>Título</th><th>Estado</th></tr></thead>
+      <tbody>
+        <tr><td>#142</td><td>Añadir preview environments por PR</td><td><span class="pill ok">passed</span></td></tr>
+        <tr><td>#141</td><td>Fix otel serviceName condicional</td><td><span class="pill ok">passed</span></td></tr>
+        <tr><td>#140</td><td>Benchmark build Vite 8 + Rolldown</td><td><span class="pill warn">running</span></td></tr>
+        <tr><td>#139</td><td>Migrar lint a Biome</td><td><span class="pill err">failed</span></td></tr>
+        <tr><td>#138</td><td>Spike Hono + Drizzle backend</td><td><span class="pill ok">passed</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
