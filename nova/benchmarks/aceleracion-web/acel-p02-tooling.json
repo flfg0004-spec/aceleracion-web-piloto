@@ -1,0 +1,48 @@
+{
+  "schema": "nova.benchmark/v1",
+  "id": "acel-p02-tooling",
+  "version": "1.0.0",
+  "title": "ACEL P02 - Build optimizado y observabilidad instrumentada",
+  "technology": "web-fullstack-2026",
+  "profile": "nova",
+  "source_nodes": ["sun-74daa0f5:P02"],
+  "source_quality_score": 0.9,
+  "claims": [
+    "El repo piloto usa Vite 8 + Rolldown o Turbopack con build medido.",
+    "El benchmark de build antes/después se registra en un artefacto trazable.",
+    "Sentry y OpenTelemetry están instrumentados con alertas de release.",
+    "Los preview environments despliegan por PR una URL efímera.",
+    "Los cambios son trazables al informe aceleracion-desarrollo-web-2026."
+  ],
+  "cases": [
+    {
+      "id": "build-benchmark",
+      "command": ["{{python}}", "-B", "check_p02.py", "--build"],
+      "cwd": "support",
+      "env": {"PYTHONDONTWRITEBYTECODE": "1", "PYTHONPATH": "."},
+      "timeout_seconds": 60
+    },
+    {
+      "id": "observability",
+      "command": ["{{python}}", "-B", "check_p02.py", "--obs"],
+      "cwd": "support",
+      "env": {"PYTHONDONTWRITEBYTECODE": "1", "PYTHONPATH": "."},
+      "timeout_seconds": 60
+    },
+    {
+      "id": "preview",
+      "command": ["{{python}}", "-B", "check_p02.py", "--preview"],
+      "cwd": "support",
+      "env": {"PYTHONDONTWRITEBYTECODE": "1", "PYTHONPATH": "."},
+      "timeout_seconds": 60
+    }
+  ],
+  "gates": [
+    {"id": "build-exit", "case": "build-benchmark", "field": "exit_code", "operator": "eq", "expected": 0, "severity": "critical"},
+    {"id": "build-marker", "case": "build-benchmark", "field": "stdout", "operator": "contains", "expected": "PASS build", "severity": "critical"},
+    {"id": "obs-exit", "case": "observability", "field": "exit_code", "operator": "eq", "expected": 0, "severity": "critical"},
+    {"id": "obs-marker", "case": "observability", "field": "stdout", "operator": "contains", "expected": "PASS obs", "severity": "critical"},
+    {"id": "preview-exit", "case": "preview", "field": "exit_code", "operator": "eq", "expected": 0, "severity": "critical"},
+    {"id": "preview-marker", "case": "preview", "field": "stdout", "operator": "contains", "expected": "PASS preview", "severity": "critical"}
+  ]
+}

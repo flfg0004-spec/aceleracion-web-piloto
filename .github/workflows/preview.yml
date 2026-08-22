@@ -1,0 +1,45 @@
+name: Preview Environment
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  deploy-preview:
+    runs-on: ubuntu-latest
+    environment:
+      name: preview-pr-${{ github.event.pull_request.number }}
+      url: ${{ steps.deploy.outputs.url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile=false
+      - run: pnpm build
+
+      # Vercel (Next.js/frontend) — estándar 2026, URL automática por PR.
+      # Alternativa full-stack GitOps: Northflank; PaaS simple: Railway.
+      - name: Deploy preview (Vercel)
+        id: deploy
+        if: ${{ secrets.VERCEL_TOKEN != '' }}
+        run: |
+          URL=$(pnpm exec vercel deploy --yes --token=${{ secrets.VERCEL_TOKEN }})
+          echo "url=$URL" >> "$GITHUB_OUTPUT"
+
+      - name: Preview URL (fallback sin token)
+        if: ${{ steps.deploy.outcome == 'skipped' }}
+        run: echo "Preview requiere VERCEL_TOKEN — configurar secret del repo."
+
+      - name: Comentar URL en el PR
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          message: |
+            🔍 **Preview environment**: ${{ steps.deploy.outputs.url || '(pendiente de VERCEL_TOKEN)' }}
+            Este entorno es efímero y se actualiza con cada push del PR.
