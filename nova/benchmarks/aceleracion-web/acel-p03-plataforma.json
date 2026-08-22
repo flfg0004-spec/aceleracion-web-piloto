@@ -1,0 +1,47 @@
+{
+  "schema": "nova.benchmark/v1",
+  "id": "acel-p03-plataforma",
+  "version": "1.0.0",
+  "title": "ACEL P03 - Decisiones de plataforma documentadas y certificadas",
+  "technology": "web-fullstack-2026",
+  "profile": "nova",
+  "source_nodes": ["sun-74daa0f5:P03"],
+  "source_quality_score": 0.9,
+  "claims": [
+    "Existe evaluación documentada de Supabase vs Convex vs Hono+Drizzle con criterio por tipo de app.",
+    "Existe matriz de frameworks (Next.js/Remix/Astro/TanStack) con métricas de rendimiento.",
+    "La evaluación de Greptile/Qodo y v0/Bolt/Lovable está documentada con veredicto.",
+    "Las decisiones tienen evidencia citada y son trazables al informe aceleracion-desarrollo-web-2026."
+  ],
+  "cases": [
+    {
+      "id": "baas-eval",
+      "command": ["{{python}}", "-B", "check_p03.py", "--baas"],
+      "cwd": "support",
+      "env": {"PYTHONDONTWRITEBYTECODE": "1", "PYTHONPATH": "."},
+      "timeout_seconds": 60
+    },
+    {
+      "id": "framework-matrix",
+      "command": ["{{python}}", "-B", "check_p03.py", "--frameworks"],
+      "cwd": "support",
+      "env": {"PYTHONDONTWRITEBYTECODE": "1", "PYTHONPATH": "."},
+      "timeout_seconds": 60
+    },
+    {
+      "id": "review-eval",
+      "command": ["{{python}}", "-B", "check_p03.py", "--review"],
+      "cwd": "support",
+      "env": {"PYTHONDONTWRITEBYTECODE": "1", "PYTHONPATH": "."},
+      "timeout_seconds": 60
+    }
+  ],
+  "gates": [
+    {"id": "baas-exit", "case": "baas-eval", "field": "exit_code", "operator": "eq", "expected": 0, "severity": "critical"},
+    {"id": "baas-marker", "case": "baas-eval", "field": "stdout", "operator": "contains", "expected": "PASS baas", "severity": "critical"},
+    {"id": "framework-exit", "case": "framework-matrix", "field": "exit_code", "operator": "eq", "expected": 0, "severity": "critical"},
+    {"id": "framework-marker", "case": "framework-matrix", "field": "stdout", "operator": "contains", "expected": "PASS frameworks", "severity": "critical"},
+    {"id": "review-exit", "case": "review-eval", "field": "exit_code", "operator": "eq", "expected": 0, "severity": "critical"},
+    {"id": "review-marker", "case": "review-eval", "field": "stdout", "operator": "contains", "expected": "PASS review", "severity": "critical"}
+  ]
+}
