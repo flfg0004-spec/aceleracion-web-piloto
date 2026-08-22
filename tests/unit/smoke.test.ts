@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'bun:test';
-import { saludo } from '../../src/index.ts';
+import { saludo } from '../../src/greeting.ts';
 
 describe('saludo', () => {
   test('incluye el nombre', () => {
