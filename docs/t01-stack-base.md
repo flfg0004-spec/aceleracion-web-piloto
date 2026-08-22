@@ -15,9 +15,14 @@ Ticket Sun: `sun-7b38785dac70` · Fase P01 · Gate `NG-ACEL-01` · Trial Nemesis
 | CI/CD | GitHub Actions | Adoptar | test+lint+build por PR |
 | Scaffold | better-t-stack / T3 | Adoptar | arranque estándar type-safe |
 
-## Diferidas a P02/P03
-- Turbopack (solo si Next.js), Sentry/OTel, previews → P02
-- Supabase/Convex/Hono+Drizzle, matriz frameworks, Greptile/Qodo, v0/Bolt/Lovable → P03
+## Estado por fase (actualizado al cierre de P03)
+- P01: pnpm, Biome, Bun, Vite 8, Playwright MCP, CodeRabbit, CI/CD — integrado.
+- P02: Sentry/OTel, previews, benchmark build — integrado (T-04/T-06/T-09).
+- P03: Hono+Drizzle spike, matriz frameworks, Greptile/Qodo, prototipos — integrado.
+
+Nota de corrección Nemesis (NT-ACEL-01 v1.0): la sección "Diferidas" original
+quedó obsoleta cuando las fases posteriores se integraron al mismo árbol; este
+documento refleja el estado real del repo.
 
 ## Trazabilidad
 - Informe: `C:\dev\informe-aceleracion-web.md` §6 (plan de adopción)
