@@ -1,0 +1,18 @@
+# Config Qodo PR-Agent (preparación T-10 — activar cuando el trigger dispare)
+# Veredicto y triggers en docs/review-tools-evaluation.md
+[pr_reviewer]
+enable = true
+require_tests_review = true       # sinergia con Qodo Cover
+num_code_suggestions = 3
+
+[pr_description]
+enable = true
+generate_ai_title = false
+
+[pr_test]
+enable = true                     # generación de tests por PR
+extra_instructions = "Cubre casos borde y errores esperados; usa el runner del repo (bun test / playwright)."
+
+[config]
+response_language = "es"
+max_model_tokens = 32000
