@@ -19,3 +19,5 @@ Repo piloto para la iniciativa `aceleracion-desarrollo-web-2026`.
 - Frameworks: Next.js / Remix / Astro / TanStack Start (matriz por proyecto)
 - Review avanzada: Greptile / Qodo
 - Prototipos: v0 / Bolt / Lovable
+## Revision r3
+Contrato de write_paths alineado con policy (configs raiz incluidos).
