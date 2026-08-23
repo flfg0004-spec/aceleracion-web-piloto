@@ -29,5 +29,10 @@ jobs:
           pnpm exec sentry-cli releases set-commits "$GITHUB_REF_NAME" --auto
           pnpm exec sentry-cli releases finalize "$GITHUB_REF_NAME"
 
-      - name: Smoke post-deploy (trazas OTel activas)
-        run: echo "OTEL_EXPORTER_OTLP_ENDPOINT debe apuntar al collector en producción."
+      - name: Verificar config observabilidad (env check)
+        run: |
+          echo "OTEL_EXPORTER_OTLP_ENDPOINT: $([ -n "$OTEL_EXPORTER_OTLP_ENDPOINT" ] && echo configurado || echo ausente)"
+          echo "OTEL_SERVICE_NAME: $([ -n "$OTEL_SERVICE_NAME" ] && echo configurado || echo ausente)"
+        env:
+          OTEL_EXPORTER_OTLP_ENDPOINT: ${{ secrets.OTEL_EXPORTER_OTLP_ENDPOINT }}
+          OTEL_SERVICE_NAME: ${{ vars.OTEL_SERVICE_NAME }}

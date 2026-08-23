@@ -1,4 +1,4 @@
-name: CI
+﻿name: CI
 
 on:
   pull_request:
@@ -20,8 +20,8 @@ jobs:
           node-version: 22
       - uses: oven-sh/setup-bun@v2
         with:
-          bun-version: latest
-      - run: pnpm install --frozen-lockfile=false # bootstrap: lockfile se congela al primer release (sun-70ad706158e0)
+          bun-version: 1.3.14
+      - run: pnpm install --frozen-lockfile
       - name: Lint (Biome)
         run: pnpm lint
       - name: Unit tests (Bun)
@@ -36,11 +36,11 @@ jobs:
       - uses: pnpm/action-setup@v4
       - uses: oven-sh/setup-bun@v2
         with:
-          bun-version: latest
+          bun-version: 1.3.14
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: pnpm install --frozen-lockfile=false
+      - run: pnpm install --frozen-lockfile
       - run: pnpm exec playwright install --with-deps chromium
       - name: E2E smoke (Playwright)
-        run: pnpm exec playwright test --project=chromium
+        run: pnpm exec playwright test --project=chromium # local: los 3 browsers; CI: chromium (rapido, deuda documentada)
